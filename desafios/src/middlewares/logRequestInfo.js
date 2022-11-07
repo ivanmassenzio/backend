@@ -1,6 +1,7 @@
 //  https://www.moesif.com/blog/technical/logging/How-we-built-a-Nodejs-Middleware-to-Log-HTTP-API-Requests-and-Responses/
 
-const requestStart = Date.now();
+const timeElapsed = Date.now();
+const today = new Date(timeElapsed).toLocaleString("es-AR", {timeZone: "America/Argentina/Buenos_Aires"});
 
 const logRequestInfo = (req, res, next) => {
     const { rawHeaders, httpVersion, method, socket, url } = req;
@@ -10,13 +11,13 @@ const logRequestInfo = (req, res, next) => {
   
     console.log(
       JSON.stringify({
-        timestamp: Date.now(),
-        processingTime: Date.now() - requestStart,
-        rawHeaders,
-        httpVersion,
+        timestamp: today,
+        processingTime: Date.now() - timeElapsed,
+        // rawHeaders,
+        // httpVersion,
         method,
-        remoteAddress,
-        remoteFamily,
+        // remoteAddress,
+        // remoteFamily,
         url,
         response: {
           statusCode,
