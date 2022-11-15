@@ -4,6 +4,7 @@ const productRouter = Router();
 
 const productModel = new ProductModel();
 
+
 productRouter.get('/:id', (req, res) => {
     const product = productModel.getById(req.params.id);
     if(product == null) {
@@ -15,12 +16,13 @@ productRouter.get('/:id', (req, res) => {
 
 productRouter.get('/', (req, res) => {
     const products = productModel.getAll();    
-    res.json({products});
+    res.render('pages/form', {products})
 });
 
 productRouter.post('/', (req, res) => {
     productModel.save(req.body);
-    res.json({ ...req.body });
+    console.log(req.body)
+    res.redirect('/api/products');
 });
 
 productRouter.put('/:id', (req, res) => {

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body>
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+<body>
+    <main>
+        <div class="jumbotron">
+          <h1>Agregar Producto</h1>
+          <form class="mt-5" action="/api/products" method="POST">
+            <input type="text" name="title" placeholder="Ingrese titulo" id="">
+            <input type="text" name="price" placeholder="Ingrese precio" id="">
+            <input type="text" name="thumbnail" placeholder="Ingrese url de la imagen" id="">
+            <input type="submit" value="Agregar">
+          </form>
+        </div>
+        <div class="jumbotron">
+          <h1>Lista de productos</h1>          
+          <table class="table mt-5">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Imagen</th>
+            </tr>
+            <% products.forEach((product) => { %>
+            <tr>
+              <td><%= product.id %></td>
+              <td><%= product.title %></td>
+              <td><%= product.price %></td>
+              <td><img class ="w-25" src="<%= product.thumbnail %>" alt=""></td>
+            <% }) %>
+            </tr>
+          </table>
+        </div>
+        
+    </main>   
+    <%- include('../partials/footer') %>
+    
+</body>
+</html>
