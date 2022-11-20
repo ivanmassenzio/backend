@@ -14,7 +14,7 @@ productRouter.get('/:id', (req, res) => {
     }
 });
 
-productRouter.get('/', (req, res) => {
+productRouter.get('/', (req, res) => {    
     const products = productModel.getAll();    
     res.render('pages/form', {products})
 });
