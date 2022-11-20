@@ -9,37 +9,46 @@
   </header>
 <body>
     <main>
-        <div class="jumbotron">
-          <h1>Agregar Producto</h1>
+      <div class="container-fluid p-3">
+        <div class="container col-3">
           <form class="mt-5" action="/api/products" method="POST">
-            <input type="text" name="title" placeholder="Ingrese titulo" id="">
-            <input type="text" name="price" placeholder="Ingrese precio" id="">
-            <input type="text" name="thumbnail" placeholder="Ingrese url de la imagen" id="">
-            <input type="submit" value="Agregar">
+            <h1>Ingrese Producto</h1>
+            <div class="form-group">
+              <input type="text" class="form-control" name="title" aria-describedby="title" placeholder="Ingrese nombre">
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" name="price" placeholder="Precio">
+            </div>
+            <div class="form-group">
+              <input type="thumbnail" class="form-control" name="thumbnail" placeholder="Ingrese URL de la imagen">
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
           </form>
-        </div>
-        <div class="jumbotron">
-          <h1>Lista de productos</h1>          
-          <table class="table mt-5">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Precio</th>
-              <th scope="col">Imagen</th>
-            </tr>
-            <% products.forEach((product) => { %>
-            <tr>
-              <td><%= product.id %></td>
-              <td><%= product.title %></td>
-              <td><%= product.price %></td>
-              <td><img class ="w-25" src="<%= product.thumbnail %>" alt=""></td>
-            <% }) %>
-            </tr>
-          </table>
-        </div>
-        
-    </main>   
-    <%- include('../partials/footer') %>
+        </div>       
+          <div class="jumbotron mt-5">
+            <h1>Lista de productos</h1>          
+            <table class="table mt-5">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Imagen</th>
+              </tr>
+              <% products.forEach((product) => { %>
+              <tr>
+                <td><%= product.id %></td>
+                <td><%= product.title %></td>
+                <td><%= product.price %></td>
+                <td><img class ="w-25" src="<%= product.thumbnail %>" alt=""></td>
+              <% }) %>
+              </tr>
+            </table>
+          </div>
+          
+      </main>   
+      <%- include('../partials/footer') %>
+      </div>
+      
     
 </body>
 </html>
