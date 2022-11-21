@@ -5,6 +5,8 @@ const userRouter = require('./routers/users');
 const express = require('express');
 const logRequestInfo = require('./middlewares/logRequestInfo');
 const ProductModel = require('./models/ProductModel');
+const Contenedor = require('./models/contenedor')
+
 
 const app = express();
 const port = 3010;
@@ -13,20 +15,24 @@ const httpServer = new HttpServer(app);
 const io = new SocketServer(httpServer);
 
 const productModel = new ProductModel();
+const chat = new Contenedor("chat.json");
 
-io.on('connection', (socket) => {
-  console.log('socket id: ', socket.id)
-  socket.emit('products', productModel.getAll());
-  // socket.emit('message', 'Este es mi mensaje desde el servidor')
-  // socket.on('notification', (data) => {
-  //   console.log(data)
-  //   io.sockets.emit('messages', data)
-  // })
-  // socket.on('new-message', (newMessage) => {
-  //   console.log({newMessage});
-  //   io.sockets.emit('chat-update', newMessage)
-  // })
+io.on('connection', async(socket) => {
+  console.log('🟢 Connected socket id: ', socket.id)
+  socket.emit('products', productModel.getAll()); 
+
+  const mensajes = await chat.getAll();
+  socket.emit('listaMensajesBienvenida', mensajes);
+
+  socket.on('nuevoMensaje', async(data) => {
+    await chat.save(data);
+
+    const mensajes = await chat.getAll();
+    io.sockets.emit('listaMensajesActualizada', mensajes);
+  })
+
 })
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

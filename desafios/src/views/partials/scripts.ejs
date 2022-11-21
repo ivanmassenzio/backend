@@ -17,5 +17,32 @@
         const productList = document.getElementById('productList');
         productList.innerHTML = productListHTML;
 
+        /* CHAT */
+        const btnMensaje = document.getElementById('btn-submit-mensaje');
+        btnMensaje.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            const email = document.getElementById('input-email').value;
+            const mensaje = document.getElementById('input-mensaje').value;
+            
+            if (email !== '' && mensaje !== '') {
+            
+                socket.emit('nuevoMensaje', {
+                    "email" : email,
+                    "message" : mensaje,
+                    "date" : new Date().toLocaleString()
+                })
+            }            
+        })
+
     })
+        
+        socket.on('listaMensajesBienvenida', (messages) => {
+            console.log(messages);
+            const mensajesListHTML = messages.map( message => `
+            <small style="display:block"> - <em style="color:brown">[${message.date}]</em> <strong style="color:blue">${message.email}</strong>: <i style="color:green">${message.message}</i></small>
+        `).join('');
+        const mensajeList = document.getElementById('historial-mensajes');
+        mensajeList.innerHTML = mensajesListHTML;
+        })        
+
 </script>;
